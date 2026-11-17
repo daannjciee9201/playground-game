@@ -4,10 +4,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>PLAYGROUND | 可愛遊戲基地</title>
 
 <style>
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
 
 body {
   margin: 0;
@@ -22,6 +29,8 @@ header {
   justify-content: space-between;
   align-items: center;
   background: white;
+  flex-wrap: wrap;
+  gap: 15px;
 }
 
 .logo {
@@ -36,13 +45,28 @@ nav a {
   color: #77667d;
 }
 
-.hero {
-  text-align: center;
-  padding: 75px 20px;
-  background: linear-gradient(135deg,#f9dff0,#e9e2ff,#dff4f5);
+nav a:hover {
+  color: #b88bd2;
 }
 
-.hero h1 { font-size: 42px; }
+.hero {
+  text-align: center;
+  padding: 80px 20px;
+  background: linear-gradient(
+    135deg,
+    #f9dff0,
+    #e9e2ff,
+    #dff4f5
+  );
+}
+
+.hero h1 {
+  font-size: 42px;
+}
+
+.hero p {
+  font-size: 17px;
+}
 
 .btn {
   display: inline-block;
@@ -55,6 +79,12 @@ nav a {
   border: none;
   cursor: pointer;
   font-size: 15px;
+  transition: .2s;
+}
+
+.btn:hover {
+  background: #966bb5;
+  transform: translateY(-2px);
 }
 
 .section {
@@ -64,26 +94,35 @@ nav a {
 
 .games {
   display: grid;
-  grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(220px, 1fr)
+  );
   gap: 25px;
   margin-top: 30px;
 }
 
 .card {
   background: white;
-  padding: 25px;
+  padding: 30px 20px;
   border-radius: 22px;
   box-shadow: 0 5px 18px #e8dce9;
 }
 
-.emoji { font-size: 50px; }
+.emoji {
+  font-size: 50px;
+}
 
-.card h3 { color: #a77bc5; }
+.card h3 {
+  color: #a77bc5;
+}
 
-#game, #memory-game {
+#game,
+#memory-game,
+#reaction-game {
   background: white;
   border-radius: 22px;
-  padding: 25px 15px;
+  padding: 30px 20px;
   max-width: 550px;
   margin: 30px auto;
   box-shadow: 0 5px 18px #e8dce9;
@@ -91,20 +130,22 @@ nav a {
 
 input {
   padding: 12px;
-  width: 120px;
+  width: 140px;
   border: 2px solid #e3c9ef;
   border-radius: 12px;
   font-size: 18px;
   text-align: center;
 }
 
-#message {
+#message,
+#memory-message,
+#reaction-result {
   min-height: 30px;
 }
 
 .memory-board {
   display: grid;
-  grid-template-columns: repeat(4,1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 10px;
   max-width: 380px;
   margin: 25px auto;
@@ -137,9 +178,41 @@ input {
 .stats {
   display: flex;
   justify-content: center;
-  gap: 25px;
+  gap: 20px;
   flex-wrap: wrap;
-  margin: 15px;
+  margin: 18px;
+}
+
+.reaction-area {
+  width: 100%;
+  min-height: 190px;
+  border: none;
+  border-radius: 20px;
+  background: #e9dcf6;
+  color: #65566b;
+  font-size: 23px;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 20px;
+  transition: background .2s;
+}
+
+.reaction-area.waiting {
+  background: #f7dce9;
+}
+
+.reaction-area.ready {
+  background: #a8dfb5;
+  color: #315d3b;
+}
+
+.reaction-area:disabled {
+  cursor: default;
+}
+
+.reaction-result {
+  font-size: 19px;
+  font-weight: bold;
 }
 
 footer {
@@ -149,18 +222,32 @@ footer {
 }
 
 @media(max-width:600px) {
-  .hero h1 { font-size: 30px; }
-  nav a { font-size: 13px; margin-left: 7px; }
-  .memory-board { gap: 7px; }
-  .memory-card { font-size: 25px; }
+  .hero h1 {
+    font-size: 30px;
+  }
+
+  nav a {
+    font-size: 13px;
+    margin-left: 7px;
+  }
+
+  .memory-board {
+    gap: 7px;
+  }
+
+  .memory-card {
+    font-size: 25px;
+  }
 }
 </style>
 </head>
 
 <body>
 
+<!-- 導覽列 -->
 <header>
   <div class="logo">☁️ PLAYGROUND</div>
+
   <nav>
     <a href="#home">首頁</a>
     <a href="#games">遊戲</a>
@@ -168,6 +255,7 @@ footer {
   </nav>
 </header>
 
+<!-- 首頁 -->
 <section class="hero" id="home">
   <h1>Welcome to PLAYGROUND! 🌷</h1>
   <p>今天也要給自己一點快樂 ♡</p>
@@ -175,11 +263,14 @@ footer {
   <a href="#games" class="btn">開始探索遊戲 ✨</a>
 </section>
 
+<!-- 遊戲選單 -->
 <section class="section" id="games">
+
   <h2>🎮 選擇你的遊戲</h2>
   <p>挑選一款遊戲，享受一點小小的快樂！</p>
 
   <div class="games">
+
     <div class="card">
       <div class="emoji">🔢</div>
       <h3>猜數字遊戲</h3>
@@ -197,30 +288,46 @@ footer {
     <div class="card">
       <div class="emoji">⭐</div>
       <h3>反應力挑戰</h3>
-      <p>挑戰你的反應能力！</p>
-      <p>Coming Soon ♡</p>
+      <p>挑戰你的反應速度！</p>
+      <a href="#reaction-game" class="btn">開始遊戲</a>
     </div>
+
   </div>
 </section>
 
+<!-- 猜數字遊戲 -->
 <section class="section" id="game">
-  <div>
-    <h2>🔢 猜數字小遊戲</h2>
-    <p>猜猜看 1～100 的正確答案！</p>
 
-    <input type="number" id="guess"
-      min="1" max="100" placeholder="輸入數字">
+  <h2>🔢 猜數字小遊戲</h2>
+  <p>我已經想好一個 1～100 的數字了！</p>
+  <p>你可以猜猜看是多少嗎？</p>
 
-    <br>
-    <button class="btn" onclick="checkGuess()">確認答案</button>
-    <button class="btn" onclick="resetGame()">重新開始</button>
+  <input
+    type="number"
+    id="guess"
+    min="1"
+    max="100"
+    placeholder="輸入數字"
+  >
 
-    <p id="message">祝你好運！🌸</p>
-    <p id="attempts">猜測次數：0</p>
-  </div>
+  <br>
+
+  <button class="btn" onclick="checkGuess()">
+    確認答案
+  </button>
+
+  <button class="btn" onclick="resetGame()">
+    重新開始
+  </button>
+
+  <p id="message">祝你好運！🌸</p>
+  <p id="attempts">猜測次數：0</p>
+
 </section>
 
+<!-- 記憶翻牌遊戲 -->
 <section class="section" id="memory-game">
+
   <h2>🃏 Memory Match</h2>
   <p>翻開卡片，找到 8 組相同的圖案吧！</p>
 
@@ -232,17 +339,67 @@ footer {
 
   <div class="memory-board" id="board"></div>
 
-  <h3 id="memory-message">準備好了嗎？開始挑戰吧！🌷</h3>
+  <h3 id="memory-message">
+    準備好了嗎？開始挑戰吧！🌷
+  </h3>
 
   <button class="btn" onclick="startMemoryGame()">
     重新開始遊戲 ↻
   </button>
+
 </section>
 
+<!-- 反應力遊戲 -->
+<section class="section" id="reaction-game">
+
+  <h2>⭐ Reaction Challenge</h2>
+
+  <p>測試你的反應速度！</p>
+  <p>等畫面變成綠色，再立刻點擊！</p>
+
+  <div class="stats">
+    <span>
+      本次成績：
+      <strong id="reaction-score">--</strong>
+    </span>
+
+    <span>
+      最佳成績：
+      <strong id="reaction-best">--</strong>
+    </span>
+  </div>
+
+  <button
+    id="reaction-area"
+    class="reaction-area"
+    onclick="reactionClick()"
+  >
+    按下開始，準備挑戰！🌷
+  </button>
+
+  <p id="reaction-result" class="reaction-result">
+    準備好測試你的反應力了嗎？
+  </p>
+
+  <button class="btn" onclick="startReactionGame()">
+    開始挑戰 ↻
+  </button>
+
+</section>
+
+<!-- 關於我們 -->
 <section class="section" id="about">
+
   <h2>🌷 About PLAYGROUND</h2>
-  <p>PLAYGROUND 是一個充滿可愛與快樂的小遊戲空間。</p>
-  <p>希望每個來到這裡的人，都能找到屬於自己的小樂趣。</p>
+
+  <p>
+    PLAYGROUND 是一個充滿可愛與快樂的小遊戲空間。
+  </p>
+
+  <p>
+    希望每個來到這裡的人，都能找到屬於自己的小樂趣。
+  </p>
+
 </section>
 
 <footer>
@@ -250,28 +407,48 @@ footer {
 </footer>
 
 <script>
-// 猜數字遊戲
+
+// ========================
+// 1. 猜數字遊戲
+// ========================
+
 let answer = Math.floor(Math.random() * 100) + 1;
 let count = 0;
+let guessFinished = false;
 
 function checkGuess() {
+
   const input = document.getElementById("guess");
   const message = document.getElementById("message");
   const value = Number(input.value);
 
-  if (!input.value || value < 1 || value > 100) {
-    message.textContent = "請輸入 1～100 的數字喔！";
+  if (!input.value || value < 1 || value > 100 ||
+      !Number.isInteger(value)) {
+
+    message.textContent = "請輸入 1～100 的整數喔！";
+    return;
+  }
+
+  if (guessFinished) {
+    message.textContent = "你已經猜中了！請重新開始新的一局。";
     return;
   }
 
   count++;
 
   if (value === answer) {
+
     message.textContent = "🎉 太棒了！你猜對了！";
+    guessFinished = true;
+
   } else if (value < answer) {
+
     message.textContent = "太小了，再猜大一點！🌷";
+
   } else {
+
     message.textContent = "太大了，再猜小一點！☁️";
+
   }
 
   document.getElementById("attempts").textContent =
@@ -279,16 +456,25 @@ function checkGuess() {
 }
 
 function resetGame() {
+
   answer = Math.floor(Math.random() * 100) + 1;
   count = 0;
+  guessFinished = false;
+
   document.getElementById("guess").value = "";
+
   document.getElementById("message").textContent =
     "新的一局開始囉！加油！♡";
+
   document.getElementById("attempts").textContent =
     "猜測次數：0";
 }
 
-// 記憶翻牌遊戲
+
+// ========================
+// 2. 記憶翻牌遊戲
+// ========================
+
 const symbols = [
   "🐱","🐶","🐰","🐻",
   "🐼","🐸","🦊","🐥"
@@ -303,8 +489,10 @@ let matched = 0;
 let seconds = 0;
 let timerInterval = null;
 let started = false;
+let memoryFinished = false;
 
 function startMemoryGame() {
+
   clearInterval(timerInterval);
 
   cards = [...symbols, ...symbols]
@@ -317,30 +505,41 @@ function startMemoryGame() {
   matched = 0;
   seconds = 0;
   started = false;
+  memoryFinished = false;
 
   document.getElementById("moves").textContent = 0;
   document.getElementById("matches").textContent = 0;
   document.getElementById("timer").textContent = 0;
+
   document.getElementById("memory-message").textContent =
     "準備好了嗎？開始挑戰吧！🌷";
 
   const board = document.getElementById("board");
+
   board.innerHTML = "";
 
-  cards.forEach((symbol, index) => {
+  cards.forEach((symbol) => {
+
     const card = document.createElement("button");
+
     card.className = "memory-card";
     card.textContent = "❔";
     card.dataset.symbol = symbol;
+
     card.setAttribute("aria-label", "未翻開的卡片");
+
     card.onclick = () => flipCard(card);
+
     board.appendChild(card);
+
   });
 }
 
 function flipCard(card) {
+
   if (
     locked ||
+    memoryFinished ||
     card.classList.contains("flipped") ||
     card.classList.contains("matched")
   ) {
@@ -348,20 +547,29 @@ function flipCard(card) {
   }
 
   if (!started) {
+
     started = true;
+
     timerInterval = setInterval(() => {
+
       seconds++;
+
       document.getElementById("timer").textContent = seconds;
+
     }, 1000);
+
   }
 
   card.textContent = card.dataset.symbol;
   card.classList.add("flipped");
+
   card.setAttribute("aria-label", card.dataset.symbol);
 
   if (!firstCard) {
+
     firstCard = card;
     return;
+
   }
 
   secondCard = card;
@@ -370,27 +578,37 @@ function flipCard(card) {
   document.getElementById("moves").textContent = moves;
 
   if (firstCard.dataset.symbol === secondCard.dataset.symbol) {
+
     firstCard.classList.add("matched");
     secondCard.classList.add("matched");
 
     firstCard = null;
     secondCard = null;
+
     matched++;
 
     document.getElementById("matches").textContent = matched;
 
     if (matched === 8) {
+
+      memoryFinished = true;
+
       clearInterval(timerInterval);
+
       document.getElementById("memory-message").textContent =
         "🎉 恭喜你！全部配對成功！你真棒！";
+
     }
+
   } else {
+
     locked = true;
 
     const oldFirst = firstCard;
     const oldSecond = secondCard;
 
     setTimeout(() => {
+
       oldFirst.textContent = "❔";
       oldSecond.textContent = "❔";
 
@@ -402,12 +620,139 @@ function flipCard(card) {
 
       firstCard = null;
       secondCard = null;
+
       locked = false;
+
     }, 800);
+
   }
 }
 
+
+// ========================
+// 3. 反應力挑戰遊戲
+// ========================
+
+let reactionState = "idle";
+let reactionStartTime = 0;
+let reactionTimeout = null;
+let bestReaction = null;
+
+function startReactionGame() {
+
+  clearTimeout(reactionTimeout);
+
+  reactionState = "waiting";
+
+  const area = document.getElementById("reaction-area");
+  const result = document.getElementById("reaction-result");
+
+  area.disabled = false;
+  area.className = "reaction-area waiting";
+
+  area.textContent = "請等待綠色畫面出現... 🌸";
+
+  result.textContent = "不要太早點擊喔！";
+
+  document.getElementById("reaction-score").textContent = "--";
+
+  document.getElementById("reaction-best").textContent =
+    bestReaction === null ? "--" : bestReaction + " ms";
+
+  const delay = Math.floor(Math.random() * 2500) + 1500;
+
+  reactionTimeout = setTimeout(() => {
+
+    if (reactionState !== "waiting") return;
+
+    reactionState = "ready";
+
+    area.className = "reaction-area ready";
+
+    area.textContent = "現在點擊！GO! 🟢";
+
+    reactionStartTime = performance.now();
+
+  }, delay);
+
+}
+
+function reactionClick() {
+
+  const area = document.getElementById("reaction-area");
+  const result = document.getElementById("reaction-result");
+
+  if (reactionState === "idle") {
+
+    result.textContent = "請先按下開始挑戰喔！";
+    return;
+
+  }
+
+  if (reactionState === "waiting") {
+
+    clearTimeout(reactionTimeout);
+
+    reactionState = "idle";
+
+    area.className = "reaction-area";
+
+    area.textContent = "太早了！再試一次 ♡";
+
+    result.textContent =
+      "要等綠色畫面出現才能點擊喔！";
+
+    return;
+
+  }
+
+  if (reactionState === "ready") {
+
+    const reactionTime = Math.round(
+      performance.now() - reactionStartTime
+    );
+
+    reactionState = "idle";
+
+    area.disabled = true;
+    area.className = "reaction-area";
+
+    area.textContent = "挑戰完成！🎉";
+
+    document.getElementById("reaction-score").textContent =
+      reactionTime + " ms";
+
+    if (
+      bestReaction === null ||
+      reactionTime < bestReaction
+    ) {
+
+      bestReaction = reactionTime;
+
+      result.textContent =
+        "🏆 新紀錄！你的最佳反應速度！";
+
+    } else {
+
+      result.textContent =
+        "做得好！繼續挑戰吧！🌷";
+
+    }
+
+    document.getElementById("reaction-best").textContent =
+      bestReaction + " ms";
+
+  }
+
+}
+
+
+// ========================
+// 啟動遊戲
+// ========================
+
 startMemoryGame();
+
 </script>
 
 </body>
