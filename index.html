@@ -1,0 +1,253 @@
+
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PLAYGROUND | 可愛遊戲基地</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Arial", sans-serif;
+  background: #fff8f5;
+  color: #65566b;
+}
+
+header {
+  padding: 24px 8%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+}
+
+.logo {
+  font-size: 25px;
+  font-weight: bold;
+  color: #a77bc5;
+}
+
+nav a {
+  margin-left: 20px;
+  text-decoration: none;
+  color: #77667d;
+}
+
+.hero {
+  text-align: center;
+  padding: 85px 20px;
+  background: linear-gradient(135deg, #f9dff0, #e9e2ff, #dff4f5);
+}
+
+.hero h1 {
+  font-size: 48px;
+  margin-bottom: 12px;
+}
+
+.hero p {
+  font-size: 18px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 13px 28px;
+  margin-top: 15px;
+  border-radius: 30px;
+  background: #b88bd2;
+  color: white;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.section {
+  padding: 50px 8%;
+  text-align: center;
+}
+
+.games {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 25px;
+  margin-top: 30px;
+}
+
+.card {
+  background: white;
+  padding: 30px 20px;
+  border-radius: 22px;
+  box-shadow: 0 5px 18px #e8dce9;
+}
+
+.card .emoji {
+  font-size: 55px;
+}
+
+.card h3 {
+  color: #a77bc5;
+}
+
+#game {
+  background: white;
+  border-radius: 22px;
+  padding: 30px 20px;
+  max-width: 500px;
+  margin: 30px auto;
+  box-shadow: 0 5px 18px #e8dce9;
+}
+
+input {
+  padding: 12px;
+  width: 120px;
+  border: 2px solid #e3c9ef;
+  border-radius: 12px;
+  font-size: 18px;
+  text-align: center;
+}
+
+#message {
+  min-height: 30px;
+  margin-top: 15px;
+}
+
+footer {
+  padding: 25px;
+  text-align: center;
+  background: #f1e5f5;
+}
+
+@media (max-width: 600px) {
+  .hero h1 {
+    font-size: 34px;
+  }
+
+  nav a {
+    margin-left: 8px;
+    font-size: 13px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">☁️ PLAYGROUND</div>
+  <nav>
+    <a href="#home">首頁</a>
+    <a href="#games">遊戲</a>
+    <a href="#about">關於</a>
+  </nav>
+</header>
+
+<section class="hero" id="home">
+  <h1>Welcome to PLAYGROUND! 🌷</h1>
+  <p>今天也要給自己一點快樂 ♡</p>
+  <p>一個可以放鬆心情、享受遊戲的小天地。</p>
+  <a href="#games" class="btn">開始探索遊戲 ✨</a>
+</section>
+
+<section class="section" id="games">
+  <h2>🎮 選擇你的遊戲</h2>
+  <p>挑選一款遊戲，享受一點小小的快樂！</p>
+
+  <div class="games">
+
+    <div class="card">
+      <div class="emoji">🔢</div>
+      <h3>猜數字遊戲</h3>
+      <p>猜猜看正確答案是多少！</p>
+      <a href="#game" class="btn">開始遊戲</a>
+    </div>
+
+    <div class="card">
+      <div class="emoji">🃏</div>
+      <h3>記憶翻牌</h3>
+      <p>考驗你的記憶力！</p>
+      <p>Coming Soon ♡</p>
+    </div>
+
+    <div class="card">
+      <div class="emoji">⭐</div>
+      <h3>反應力挑戰</h3>
+      <p>挑戰你的反應能力！</p>
+      <p>Coming Soon ♡</p>
+    </div>
+
+  </div>
+</section>
+
+<section class="section" id="game">
+  <h2>🔢 猜數字小遊戲</h2>
+  <p>我已經想好一個 1～100 的數字了！</p>
+  <p>你可以猜猜看是多少嗎？</p>
+
+  <input type="number" id="guess"
+    min="1" max="100" placeholder="輸入數字">
+
+  <br>
+  <button class="btn" onclick="checkGuess()">確認答案</button>
+  <button class="btn" onclick="resetGame()">重新開始</button>
+
+  <p id="message">祝你好運！🌸</p>
+  <p id="attempts">猜測次數：0</p>
+</section>
+
+<section class="section" id="about">
+  <h2>🌷 About PLAYGROUND</h2>
+  <p>PLAYGROUND 是一個充滿可愛與快樂的小遊戲空間。</p>
+  <p>希望每個來到這裡的人，都能找到屬於自己的小樂趣。</p>
+</section>
+
+<footer>
+  <p>© 2026 PLAYGROUND | Made with ♡</p>
+</footer>
+
+<script>
+let answer = Math.floor(Math.random() * 100) + 1;
+let count = 0;
+
+function checkGuess() {
+  const input = document.getElementById("guess");
+  const message = document.getElementById("message");
+  const value = Number(input.value);
+
+  if (!input.value || value < 1 || value > 100) {
+    message.textContent = "請輸入 1～100 的數字喔！";
+    return;
+  }
+
+  count++;
+
+  if (value === answer) {
+    message.textContent = "🎉 太棒了！你猜對了！";
+  } else if (value < answer) {
+    message.textContent = "太小了，再猜大一點！🌷";
+  } else {
+    message.textContent = "太大了，再猜小一點！☁️";
+  }
+
+  document.getElementById("attempts").textContent =
+    "猜測次數：" + count;
+}
+
+function resetGame() {
+  answer = Math.floor(Math.random() * 100) + 1;
+  count = 0;
+
+  document.getElementById("guess").value = "";
+  document.getElementById("message").textContent =
+    "新的一局開始囉！加油！♡";
+  document.getElementById("attempts").textContent =
+    "猜測次數：0";
+}
+</script>
+
+</body>
+</html>
