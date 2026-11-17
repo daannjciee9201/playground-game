@@ -7,13 +7,11 @@
 <title>PLAYGROUND | 可愛遊戲基地</title>
 
 <style>
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
   margin: 0;
-  font-family: "Arial", sans-serif;
+  font-family: Arial, sans-serif;
   background: #fff8f5;
   color: #65566b;
 }
@@ -23,7 +21,7 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #fff;
+  background: white;
 }
 
 .logo {
@@ -33,71 +31,60 @@ header {
 }
 
 nav a {
-  margin-left: 20px;
+  margin-left: 15px;
   text-decoration: none;
   color: #77667d;
 }
 
 .hero {
   text-align: center;
-  padding: 85px 20px;
-  background: linear-gradient(135deg, #f9dff0, #e9e2ff, #dff4f5);
+  padding: 75px 20px;
+  background: linear-gradient(135deg,#f9dff0,#e9e2ff,#dff4f5);
 }
 
-.hero h1 {
-  font-size: 48px;
-  margin-bottom: 12px;
-}
-
-.hero p {
-  font-size: 18px;
-}
+.hero h1 { font-size: 42px; }
 
 .btn {
   display: inline-block;
-  padding: 13px 28px;
-  margin-top: 15px;
+  padding: 12px 25px;
+  margin: 8px 4px;
   border-radius: 30px;
   background: #b88bd2;
   color: white;
   text-decoration: none;
   border: none;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 15px;
 }
 
 .section {
-  padding: 50px 8%;
+  padding: 45px 8%;
   text-align: center;
 }
 
 .games {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
   gap: 25px;
   margin-top: 30px;
 }
 
 .card {
   background: white;
-  padding: 30px 20px;
+  padding: 25px;
   border-radius: 22px;
   box-shadow: 0 5px 18px #e8dce9;
 }
 
-.card .emoji {
-  font-size: 55px;
-}
+.emoji { font-size: 50px; }
 
-.card h3 {
-  color: #a77bc5;
-}
+.card h3 { color: #a77bc5; }
 
-#game {
+#game, #memory-game {
   background: white;
   border-radius: 22px;
-  padding: 30px 20px;
-  max-width: 500px;
+  padding: 25px 15px;
+  max-width: 550px;
   margin: 30px auto;
   box-shadow: 0 5px 18px #e8dce9;
 }
@@ -113,7 +100,46 @@ input {
 
 #message {
   min-height: 30px;
-  margin-top: 15px;
+}
+
+.memory-board {
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap: 10px;
+  max-width: 380px;
+  margin: 25px auto;
+}
+
+.memory-card {
+  aspect-ratio: 1;
+  border: none;
+  border-radius: 15px;
+  background: #e9dcf6;
+  font-size: 32px;
+  cursor: pointer;
+  transition: transform .2s, background .2s;
+}
+
+.memory-card:hover {
+  transform: scale(1.04);
+}
+
+.memory-card.flipped,
+.memory-card.matched {
+  background: #fce4ef;
+}
+
+.memory-card.matched {
+  cursor: default;
+  opacity: .7;
+}
+
+.stats {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  flex-wrap: wrap;
+  margin: 15px;
 }
 
 footer {
@@ -122,15 +148,11 @@ footer {
   background: #f1e5f5;
 }
 
-@media (max-width: 600px) {
-  .hero h1 {
-    font-size: 34px;
-  }
-
-  nav a {
-    margin-left: 8px;
-    font-size: 13px;
-  }
+@media(max-width:600px) {
+  .hero h1 { font-size: 30px; }
+  nav a { font-size: 13px; margin-left: 7px; }
+  .memory-board { gap: 7px; }
+  .memory-card { font-size: 25px; }
 }
 </style>
 </head>
@@ -158,7 +180,6 @@ footer {
   <p>挑選一款遊戲，享受一點小小的快樂！</p>
 
   <div class="games">
-
     <div class="card">
       <div class="emoji">🔢</div>
       <h3>猜數字遊戲</h3>
@@ -169,8 +190,8 @@ footer {
     <div class="card">
       <div class="emoji">🃏</div>
       <h3>記憶翻牌</h3>
-      <p>考驗你的記憶力！</p>
-      <p>Coming Soon ♡</p>
+      <p>找出相同的可愛圖案！</p>
+      <a href="#memory-game" class="btn">開始遊戲</a>
     </div>
 
     <div class="card">
@@ -179,24 +200,43 @@ footer {
       <p>挑戰你的反應能力！</p>
       <p>Coming Soon ♡</p>
     </div>
-
   </div>
 </section>
 
 <section class="section" id="game">
-  <h2>🔢 猜數字小遊戲</h2>
-  <p>我已經想好一個 1～100 的數字了！</p>
-  <p>你可以猜猜看是多少嗎？</p>
+  <div>
+    <h2>🔢 猜數字小遊戲</h2>
+    <p>猜猜看 1～100 的正確答案！</p>
 
-  <input type="number" id="guess"
-    min="1" max="100" placeholder="輸入數字">
+    <input type="number" id="guess"
+      min="1" max="100" placeholder="輸入數字">
 
-  <br>
-  <button class="btn" onclick="checkGuess()">確認答案</button>
-  <button class="btn" onclick="resetGame()">重新開始</button>
+    <br>
+    <button class="btn" onclick="checkGuess()">確認答案</button>
+    <button class="btn" onclick="resetGame()">重新開始</button>
 
-  <p id="message">祝你好運！🌸</p>
-  <p id="attempts">猜測次數：0</p>
+    <p id="message">祝你好運！🌸</p>
+    <p id="attempts">猜測次數：0</p>
+  </div>
+</section>
+
+<section class="section" id="memory-game">
+  <h2>🃏 Memory Match</h2>
+  <p>翻開卡片，找到 8 組相同的圖案吧！</p>
+
+  <div class="stats">
+    <span>翻牌次數：<strong id="moves">0</strong></span>
+    <span>配對成功：<strong id="matches">0</strong>/8</span>
+    <span>時間：<strong id="timer">0</strong> 秒</span>
+  </div>
+
+  <div class="memory-board" id="board"></div>
+
+  <h3 id="memory-message">準備好了嗎？開始挑戰吧！🌷</h3>
+
+  <button class="btn" onclick="startMemoryGame()">
+    重新開始遊戲 ↻
+  </button>
 </section>
 
 <section class="section" id="about">
@@ -210,6 +250,7 @@ footer {
 </footer>
 
 <script>
+// 猜數字遊戲
 let answer = Math.floor(Math.random() * 100) + 1;
 let count = 0;
 
@@ -240,13 +281,133 @@ function checkGuess() {
 function resetGame() {
   answer = Math.floor(Math.random() * 100) + 1;
   count = 0;
-
   document.getElementById("guess").value = "";
   document.getElementById("message").textContent =
     "新的一局開始囉！加油！♡";
   document.getElementById("attempts").textContent =
     "猜測次數：0";
 }
+
+// 記憶翻牌遊戲
+const symbols = [
+  "🐱","🐶","🐰","🐻",
+  "🐼","🐸","🦊","🐥"
+];
+
+let cards = [];
+let firstCard = null;
+let secondCard = null;
+let locked = false;
+let moves = 0;
+let matched = 0;
+let seconds = 0;
+let timerInterval = null;
+let started = false;
+
+function startMemoryGame() {
+  clearInterval(timerInterval);
+
+  cards = [...symbols, ...symbols]
+    .sort(() => Math.random() - 0.5);
+
+  firstCard = null;
+  secondCard = null;
+  locked = false;
+  moves = 0;
+  matched = 0;
+  seconds = 0;
+  started = false;
+
+  document.getElementById("moves").textContent = 0;
+  document.getElementById("matches").textContent = 0;
+  document.getElementById("timer").textContent = 0;
+  document.getElementById("memory-message").textContent =
+    "準備好了嗎？開始挑戰吧！🌷";
+
+  const board = document.getElementById("board");
+  board.innerHTML = "";
+
+  cards.forEach((symbol, index) => {
+    const card = document.createElement("button");
+    card.className = "memory-card";
+    card.textContent = "❔";
+    card.dataset.symbol = symbol;
+    card.setAttribute("aria-label", "未翻開的卡片");
+    card.onclick = () => flipCard(card);
+    board.appendChild(card);
+  });
+}
+
+function flipCard(card) {
+  if (
+    locked ||
+    card.classList.contains("flipped") ||
+    card.classList.contains("matched")
+  ) {
+    return;
+  }
+
+  if (!started) {
+    started = true;
+    timerInterval = setInterval(() => {
+      seconds++;
+      document.getElementById("timer").textContent = seconds;
+    }, 1000);
+  }
+
+  card.textContent = card.dataset.symbol;
+  card.classList.add("flipped");
+  card.setAttribute("aria-label", card.dataset.symbol);
+
+  if (!firstCard) {
+    firstCard = card;
+    return;
+  }
+
+  secondCard = card;
+  moves++;
+
+  document.getElementById("moves").textContent = moves;
+
+  if (firstCard.dataset.symbol === secondCard.dataset.symbol) {
+    firstCard.classList.add("matched");
+    secondCard.classList.add("matched");
+
+    firstCard = null;
+    secondCard = null;
+    matched++;
+
+    document.getElementById("matches").textContent = matched;
+
+    if (matched === 8) {
+      clearInterval(timerInterval);
+      document.getElementById("memory-message").textContent =
+        "🎉 恭喜你！全部配對成功！你真棒！";
+    }
+  } else {
+    locked = true;
+
+    const oldFirst = firstCard;
+    const oldSecond = secondCard;
+
+    setTimeout(() => {
+      oldFirst.textContent = "❔";
+      oldSecond.textContent = "❔";
+
+      oldFirst.classList.remove("flipped");
+      oldSecond.classList.remove("flipped");
+
+      oldFirst.setAttribute("aria-label", "未翻開的卡片");
+      oldSecond.setAttribute("aria-label", "未翻開的卡片");
+
+      firstCard = null;
+      secondCard = null;
+      locked = false;
+    }, 800);
+  }
+}
+
+startMemoryGame();
 </script>
 
 </body>
