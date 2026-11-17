@@ -1,413 +1,514 @@
-
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>PLAYGROUND | 可愛遊戲基地</title>
-
+<meta name="theme-color" content="#f4f1e9">
+<title>PLAYGROUND — A little space to play</title>
 <style>
-* {
-  box-sizing: border-box;
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --paper: #f4f1e9;
+  --paper-deep: #eae6dc;
+  --ink: #202c25;
+  --muted: #737a70;
+  --green: #344b3d;
+  --green-dark: #26392e;
+  --lime: #d8e2a8;
+  --line: rgba(32, 44, 37, .14);
+  --white: #fffefa;
+  --shadow: 0 18px 50px rgba(35, 47, 38, .08);
 }
 
-html {
-  scroll-behavior: smooth;
-}
-
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 90px; }
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
-  background: #fff8f5;
-  color: #65566b;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "DM Sans", "Noto Sans TC", sans-serif;
+  line-height: 1.7;
 }
+a { color: inherit; }
+button, input { font: inherit; }
+button, a { -webkit-tap-highlight-color: transparent; }
 
-header {
-  padding: 24px 8%;
+.site-header {
+  min-height: 82px;
+  padding: 0 7.5%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: white;
-  flex-wrap: wrap;
-  gap: 15px;
+  gap: 24px;
+  background: rgba(244, 241, 233, .92);
+  border-bottom: 1px solid var(--line);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  backdrop-filter: blur(14px);
 }
-
 .logo {
-  font-size: 25px;
-  font-weight: bold;
-  color: #a77bc5;
-}
-
-nav a {
-  margin-left: 15px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--ink);
   text-decoration: none;
-  color: #77667d;
+  font-size: 19px;
+  font-weight: 800;
+  letter-spacing: .13em;
 }
-
-nav a:hover {
-  color: #b88bd2;
+.logo-mark {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--green);
+  color: var(--lime);
+  font-size: 16px;
+  letter-spacing: 0;
 }
+nav { display: flex; align-items: center; gap: 34px; }
+nav a {
+  text-decoration: none;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: .04em;
+  transition: color .2s;
+}
+nav a:hover { color: var(--green); }
 
 .hero {
-  text-align: center;
-  padding: 80px 20px;
-  background: linear-gradient(
-    135deg,
-    #f9dff0,
-    #e9e2ff,
-    #dff4f5
-  );
+  position: relative;
+  overflow: hidden;
+  min-height: 540px;
+  padding: 92px 9% 86px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(260px, .8fr);
+  align-items: center;
+  gap: 54px;
+  background: var(--green);
+  color: var(--white);
 }
-
+.hero::before, .hero::after {
+  content: "";
+  position: absolute;
+  border: 1px solid rgba(216, 226, 168, .2);
+  border-radius: 50%;
+  pointer-events: none;
+}
+.hero::before { width: 470px; height: 470px; right: -110px; top: -170px; }
+.hero::after { width: 330px; height: 330px; right: -40px; top: -100px; }
+.hero-copy, .hero-art { position: relative; z-index: 1; }
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--lime);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+}
+.eyebrow::before { content: ""; width: 25px; height: 1px; background: currentColor; }
 .hero h1 {
-  font-size: 42px;
+  margin: 24px 0 18px;
+  max-width: 650px;
+  font-size: clamp(44px, 6vw, 76px);
+  line-height: 1.08;
+  letter-spacing: -.055em;
+  font-weight: 700;
 }
-
-.hero p {
-  font-size: 17px;
-}
-
-.btn {
-  display: inline-block;
-  padding: 12px 25px;
-  margin: 8px 4px;
-  border-radius: 30px;
-  background: #b88bd2;
-  color: white;
-  text-decoration: none;
-  border: none;
-  cursor: pointer;
+.hero h1 span { color: var(--lime); }
+.hero-copy > p {
+  max-width: 470px;
+  color: rgba(255, 254, 250, .72);
   font-size: 15px;
-  transition: .2s;
+  line-height: 1.9;
+  margin: 0 0 30px;
 }
-
-.btn:hover {
-  background: #966bb5;
-  transform: translateY(-2px);
+.hero-art {
+  min-height: 300px;
+  display: grid;
+  place-items: center;
 }
-
-.section {
-  padding: 45px 8%;
-  text-align: center;
+.art-card {
+  width: min(100%, 330px);
+  aspect-ratio: 1 / 1.05;
+  border-radius: 46% 46% 28px 28px;
+  background: var(--lime);
+  color: var(--green-dark);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transform: rotate(4deg);
+  box-shadow: 22px 24px 0 rgba(18, 29, 22, .18);
 }
+.art-symbol { font-size: clamp(74px, 10vw, 116px); line-height: 1; }
+.art-caption {
+  margin-top: 22px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .25em;
+}
+.btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  min-height: 46px;
+  padding: 0 23px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background: var(--lime);
+  color: var(--green-dark);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: .04em;
+  cursor: pointer;
+  transition: transform .2s, background .2s, box-shadow .2s;
+}
+.btn:hover { transform: translateY(-3px); background: #e5edc1; box-shadow: 0 8px 18px rgba(0,0,0,.12); }
+.btn-outline {
+  background: transparent;
+  border-color: var(--line);
+  color: var(--green);
+}
+.btn-outline:hover { background: var(--green); color: white; }
 
+.section { padding: 94px 9%; }
+.section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 24px;
+  margin-bottom: 38px;
+}
+.kicker {
+  color: #78836b;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+}
+.section h2 {
+  margin: 8px 0 0;
+  font-size: clamp(29px, 4vw, 42px);
+  line-height: 1.2;
+  letter-spacing: -.045em;
+}
+.section-intro { max-width: 360px; color: var(--muted); font-size: 13px; margin: 0; }
 .games {
   display: grid;
-  grid-template-columns: repeat(
-    auto-fit,
-    minmax(220px, 1fr)
-  );
-  gap: 25px;
-  margin-top: 30px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
 }
-
 .card {
-  background: white;
-  padding: 30px 20px;
-  border-radius: 22px;
-  box-shadow: 0 5px 18px #e8dce9;
+  min-height: 285px;
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: 0 5px 20px rgba(35,47,38,.025);
+  transition: transform .25s, box-shadow .25s, border-color .25s;
 }
-
+.card:hover { transform: translateY(-7px); box-shadow: var(--shadow); border-color: rgba(52,75,61,.35); }
+.card-top { width: 100%; display: flex; justify-content: space-between; align-items: center; }
+.card-number { color: #9a9d91; font-size: 11px; letter-spacing: .12em; font-weight: 700; }
 .emoji {
-  font-size: 50px;
+  width: 54px;
+  height: 54px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #edf0e3;
+  font-size: 26px;
 }
+.card h3 { margin: 24px 0 7px; color: var(--ink); font-size: 20px; letter-spacing: -.03em; }
+.card p { margin: 0 0 24px; color: var(--muted); font-size: 13px; }
+.card .btn { margin-top: auto; }
 
-.card h3 {
-  color: #a77bc5;
-}
-
-#game,
-#memory-game,
-#reaction-game {
-  background: white;
-  border-radius: 22px;
-  padding: 30px 20px;
-  max-width: 550px;
-  margin: 30px auto;
-  box-shadow: 0 5px 18px #e8dce9;
-}
-
-input {
-  padding: 12px;
-  width: 140px;
-  border: 2px solid #e3c9ef;
-  border-radius: 12px;
-  font-size: 18px;
+.game-section { padding-top: 26px; }
+.game-panel {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 42px;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
   text-align: center;
 }
-
-#message,
-#memory-message,
-#reaction-result {
+.game-panel h2 { margin: 0 0 8px; font-size: 30px; }
+.game-panel > p { color: var(--muted); font-size: 14px; }
+.game-panel input {
+  width: min(100%, 220px);
+  min-height: 48px;
+  margin: 16px 5px 8px;
+  padding: 10px 14px;
+  border: 1px solid #cbd0c3;
+  border-radius: 4px;
+  background: #fbfaf6;
+  color: var(--ink);
+  text-align: center;
+  font-size: 17px;
+  outline: none;
+}
+.game-panel input:focus { border-color: var(--green); box-shadow: 0 0 0 3px rgba(52,75,61,.1); }
+.game-panel .btn { margin: 8px 4px; }
+#message, #memory-message, #reaction-result {
   min-height: 30px;
+  color: var(--green);
+  font-weight: 600;
 }
-
-.memory-board {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
-  max-width: 380px;
-  margin: 25px auto;
-}
-
-.memory-card {
-  aspect-ratio: 1;
-  border: none;
-  border-radius: 15px;
-  background: #e9dcf6;
-  font-size: 32px;
-  cursor: pointer;
-  transition: transform .2s, background .2s;
-}
-
-.memory-card:hover {
-  transform: scale(1.04);
-}
-
-.memory-card.flipped,
-.memory-card.matched {
-  background: #fce4ef;
-}
-
-.memory-card.matched {
-  cursor: default;
-  opacity: .7;
-}
-
+#attempts { color: var(--muted); font-size: 12px; }
 .stats {
   display: flex;
   justify-content: center;
-  gap: 20px;
   flex-wrap: wrap;
-  margin: 18px;
+  gap: 12px;
+  margin: 22px 0;
 }
-
+.stats span {
+  min-width: 125px;
+  padding: 10px 16px;
+  background: #f1f2e9;
+  border-radius: 4px;
+  color: var(--muted);
+  font-size: 12px;
+}
+.stats strong { color: var(--green); font-size: 15px; }
+.memory-board {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  max-width: 390px;
+  margin: 25px auto;
+}
+.memory-card {
+  aspect-ratio: 1;
+  border: 1px solid #dfe3d5;
+  border-radius: 6px;
+  background: #e9eddf;
+  color: var(--green);
+  font-size: 30px;
+  cursor: pointer;
+  transition: transform .2s, background .2s, border-color .2s;
+}
+.memory-card:hover { transform: translateY(-2px); border-color: #9ca98d; }
+.memory-card.flipped, .memory-card.matched { background: #dce6c3; }
+.memory-card.matched { cursor: default; opacity: .72; }
 .reaction-area {
   width: 100%;
   min-height: 190px;
-  border: none;
-  border-radius: 20px;
-  background: #e9dcf6;
-  color: #65566b;
-  font-size: 23px;
-  font-weight: bold;
+  padding: 22px;
+  border: 1px solid #dfe3d5;
+  border-radius: 6px;
+  background: #e9eddf;
+  color: var(--green);
+  font-size: 20px;
+  font-weight: 700;
   cursor: pointer;
-  padding: 20px;
-  transition: background .2s;
+  transition: background .2s, color .2s;
 }
+.reaction-area.waiting { background: #e8dfcf; color: #6c5439; }
+.reaction-area.ready { background: #b9d18c; color: #203b28; }
+.reaction-area:disabled { cursor: default; }
+.reaction-result { font-size: 15px; }
 
-.reaction-area.waiting {
-  background: #f7dce9;
+.about-section {
+  padding-top: 76px;
+  padding-bottom: 86px;
+  background: var(--paper-deep);
 }
-
-.reaction-area.ready {
-  background: #a8dfb5;
-  color: #315d3b;
+.about-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: .8fr 1.2fr;
+  gap: 60px;
+  align-items: start;
 }
-
-.reaction-area:disabled {
-  cursor: default;
+.about-stamp {
+  min-height: 210px;
+  display: grid;
+  place-items: center;
+  background: var(--green);
+  color: var(--lime);
+  border-radius: 8px;
+  font-size: 62px;
 }
-
-.reaction-result {
-  font-size: 19px;
-  font-weight: bold;
-}
-
+.about-copy h2 { margin: 8px 0 15px; font-size: 34px; }
+.about-copy p { color: var(--muted); font-size: 14px; margin: 0 0 12px; }
 footer {
-  padding: 25px;
-  text-align: center;
-  background: #f1e5f5;
+  padding: 25px 7.5%;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  background: var(--green-dark);
+  color: rgba(255,254,250,.72);
+  font-size: 11px;
+  letter-spacing: .08em;
 }
+footer p { margin: 0; }
 
-@media(max-width:600px) {
-  .hero h1 {
-    font-size: 30px;
-  }
-
-  nav a {
-    font-size: 13px;
-    margin-left: 7px;
-  }
-
-  .memory-board {
-    gap: 7px;
-  }
-
-  .memory-card {
-    font-size: 25px;
-  }
+@media (max-width: 800px) {
+  .hero { grid-template-columns: 1fr .65fr; gap: 25px; padding: 75px 7%; }
+  .section { padding: 72px 7%; }
+  .games { grid-template-columns: 1fr 1fr; }
+  .about-inner { gap: 30px; }
+}
+@media (max-width: 600px) {
+  .site-header { min-height: 70px; padding: 0 5%; }
+  .logo { font-size: 16px; }
+  nav { gap: 15px; }
+  nav a { font-size: 11px; }
+  .hero { display: block; padding: 72px 7% 65px; }
+  .hero h1 { font-size: 48px; }
+  .hero-art { min-height: 220px; margin-top: 45px; }
+  .art-card { width: 210px; }
+  .art-symbol { font-size: 78px; }
+  .section { padding: 64px 6%; }
+  .section-heading { display: block; }
+  .section-intro { margin-top: 14px; }
+  .games { grid-template-columns: 1fr; }
+  .card { min-height: 245px; }
+  .game-panel { padding: 28px 17px; }
+  .game-panel h2 { font-size: 25px; }
+  .memory-board { gap: 7px; }
+  .memory-card { font-size: 25px; }
+  .about-inner { grid-template-columns: 1fr; }
+  .about-stamp { min-height: 150px; }
+  footer { flex-direction: column; text-align: center; }
 }
 </style>
 </head>
-
 <body>
 
-<!-- 導覽列 -->
-<header>
-  <div class="logo">☁️ PLAYGROUND</div>
-
-  <nav>
+<header class="site-header">
+  <a class="logo" href="#home"><span class="logo-mark">P.</span> PLAYGROUND</a>
+  <nav aria-label="主要導覽">
     <a href="#home">首頁</a>
-    <a href="#games">遊戲</a>
-    <a href="#about">關於</a>
+    <a href="#games">遊戲選單</a>
+    <a href="#about">關於本站</a>
   </nav>
 </header>
 
-<!-- 首頁 -->
 <section class="hero" id="home">
-  <h1>Welcome to PLAYGROUND! 🌷</h1>
-  <p>今天也要給自己一點快樂 ♡</p>
-  <p>一個可以放鬆心情、享受遊戲的小天地。</p>
-  <a href="#games" class="btn">開始探索遊戲 ✨</a>
+  <div class="hero-copy">
+    <div class="eyebrow">A LITTLE SPACE TO PLAY</div>
+    <h1>Make room<br>for <span>play.</span></h1>
+    <p>忙碌的日常裡，也留一點時間給自己。<br>探索簡單、有趣的小遊戲，享受片刻的放鬆。</p>
+    <a href="#games" class="btn">探索遊戲 <span aria-hidden="true">↗</span></a>
+  </div>
+  <div class="hero-art" aria-hidden="true">
+    <div class="art-card">
+      <div class="art-symbol">✳</div>
+      <div class="art-caption">PLAY · PAUSE · REPEAT</div>
+    </div>
+  </div>
 </section>
 
-<!-- 遊戲選單 -->
 <section class="section" id="games">
-
-  <h2>🎮 選擇你的遊戲</h2>
-  <p>挑選一款遊戲，享受一點小小的快樂！</p>
-
+  <div class="section-heading">
+    <div>
+      <div class="kicker">THE PLAYLIST / 01—03</div>
+      <h2>Choose your game.</h2>
+    </div>
+    <p class="section-intro">三種不同的小挑戰，選一款開始今天的遊戲時間。</p>
+  </div>
   <div class="games">
-
-    <div class="card">
-      <div class="emoji">🔢</div>
+    <article class="card">
+      <div class="card-top"><span class="card-number">GAME 01</span><span class="emoji">⌁</span></div>
       <h3>猜數字遊戲</h3>
-      <p>猜猜看正確答案是多少！</p>
-      <a href="#game" class="btn">開始遊戲</a>
-    </div>
-
-    <div class="card">
-      <div class="emoji">🃏</div>
+      <p>在 1 到 100 之間，找出隱藏的正確答案。</p>
+      <a href="#game" class="btn btn-outline">開始遊戲 ↗</a>
+    </article>
+    <article class="card">
+      <div class="card-top"><span class="card-number">GAME 02</span><span class="emoji">▦</span></div>
       <h3>記憶翻牌</h3>
-      <p>找出相同的可愛圖案！</p>
-      <a href="#memory-game" class="btn">開始遊戲</a>
-    </div>
-
-    <div class="card">
-      <div class="emoji">⭐</div>
+      <p>考驗觀察力與記憶力，找出全部相同的圖案。</p>
+      <a href="#memory-game" class="btn btn-outline">開始遊戲 ↗</a>
+    </article>
+    <article class="card">
+      <div class="card-top"><span class="card-number">GAME 03</span><span class="emoji">◉</span></div>
       <h3>反應力挑戰</h3>
-      <p>挑戰你的反應速度！</p>
-      <a href="#reaction-game" class="btn">開始遊戲</a>
+      <p>集中注意力，在訊號出現的瞬間按下按鈕。</p>
+      <a href="#reaction-game" class="btn btn-outline">開始遊戲 ↗</a>
+    </article>
+  </div>
+</section>
+
+<section class="section game-section" id="game">
+  <div class="game-panel">
+    <div class="kicker">GAME 01 / NUMBER GUESS</div>
+    <h2>猜數字遊戲</h2>
+    <p>我已經想好一個 1～100 的數字了。你可以猜猜看是多少嗎？</p>
+    <input type="number" id="guess" min="1" max="100" placeholder="輸入數字">
+    <br>
+    <button class="btn" onclick="checkGuess()">確認答案</button>
+    <button class="btn btn-outline" onclick="resetGame()">重新開始</button>
+    <p id="message">祝你好運！</p>
+    <p id="attempts">猜測次數：0</p>
+  </div>
+</section>
+
+<section class="section game-section" id="memory-game">
+  <div class="game-panel">
+    <div class="kicker">GAME 02 / MEMORY MATCH</div>
+    <h2>記憶翻牌</h2>
+    <p>翻開卡片，找到 8 組相同的圖案吧！</p>
+    <div class="stats">
+      <span>翻牌次數：<strong id="moves">0</strong></span>
+      <span>配對成功：<strong id="matches">0</strong>/8</span>
+      <span>時間：<strong id="timer">0</strong> 秒</span>
     </div>
-
+    <div class="memory-board" id="board"></div>
+    <h3 id="memory-message">準備好了嗎？開始挑戰吧！</h3>
+    <button class="btn" onclick="startMemoryGame()">重新開始遊戲 ↻</button>
   </div>
 </section>
 
-<!-- 猜數字遊戲 -->
-<section class="section" id="game">
-
-  <h2>🔢 猜數字小遊戲</h2>
-  <p>我已經想好一個 1～100 的數字了！</p>
-  <p>你可以猜猜看是多少嗎？</p>
-
-  <input
-    type="number"
-    id="guess"
-    min="1"
-    max="100"
-    placeholder="輸入數字"
-  >
-
-  <br>
-
-  <button class="btn" onclick="checkGuess()">
-    確認答案
-  </button>
-
-  <button class="btn" onclick="resetGame()">
-    重新開始
-  </button>
-
-  <p id="message">祝你好運！🌸</p>
-  <p id="attempts">猜測次數：0</p>
-
-</section>
-
-<!-- 記憶翻牌遊戲 -->
-<section class="section" id="memory-game">
-
-  <h2>🃏 Memory Match</h2>
-  <p>翻開卡片，找到 8 組相同的圖案吧！</p>
-
-  <div class="stats">
-    <span>翻牌次數：<strong id="moves">0</strong></span>
-    <span>配對成功：<strong id="matches">0</strong>/8</span>
-    <span>時間：<strong id="timer">0</strong> 秒</span>
+<section class="section game-section" id="reaction-game">
+  <div class="game-panel">
+    <div class="kicker">GAME 03 / REACTION TEST</div>
+    <h2>反應力挑戰</h2>
+    <p>測試你的反應速度！等畫面變成綠色，再立刻點擊。</p>
+    <div class="stats">
+      <span>本次成績：<strong id="reaction-score">--</strong></span>
+      <span>最佳成績：<strong id="reaction-best">--</strong></span>
+    </div>
+    <button id="reaction-area" class="reaction-area" onclick="reactionClick()">按下開始，準備挑戰！</button>
+    <p id="reaction-result" class="reaction-result">準備好測試你的反應力了嗎？</p>
+    <button class="btn" onclick="startReactionGame()">開始挑戰 ↻</button>
   </div>
-
-  <div class="memory-board" id="board"></div>
-
-  <h3 id="memory-message">
-    準備好了嗎？開始挑戰吧！🌷
-  </h3>
-
-  <button class="btn" onclick="startMemoryGame()">
-    重新開始遊戲 ↻
-  </button>
-
 </section>
 
-<!-- 反應力遊戲 -->
-<section class="section" id="reaction-game">
-
-  <h2>⭐ Reaction Challenge</h2>
-
-  <p>測試你的反應速度！</p>
-  <p>等畫面變成綠色，再立刻點擊！</p>
-
-  <div class="stats">
-    <span>
-      本次成績：
-      <strong id="reaction-score">--</strong>
-    </span>
-
-    <span>
-      最佳成績：
-      <strong id="reaction-best">--</strong>
-    </span>
+<section class="section about-section" id="about">
+  <div class="about-inner">
+    <div class="about-stamp" aria-hidden="true">✳</div>
+    <div class="about-copy">
+      <div class="kicker">A NOTE ABOUT US</div>
+      <h2>About PLAYGROUND.</h2>
+      <p>PLAYGROUND 是一個以簡單互動遊戲為核心的小型遊戲網站。</p>
+      <p>我們希望透過猜數字、記憶翻牌與反應力挑戰，讓使用者在日常之中找到一點輕鬆、有趣的時刻。</p>
+    </div>
   </div>
-
-  <button
-    id="reaction-area"
-    class="reaction-area"
-    onclick="reactionClick()"
-  >
-    按下開始，準備挑戰！🌷
-  </button>
-
-  <p id="reaction-result" class="reaction-result">
-    準備好測試你的反應力了嗎？
-  </p>
-
-  <button class="btn" onclick="startReactionGame()">
-    開始挑戰 ↻
-  </button>
-
-</section>
-
-<!-- 關於我們 -->
-<section class="section" id="about">
-
-  <h2>🌷 About PLAYGROUND</h2>
-
-  <p>
-    PLAYGROUND 是一個充滿可愛與快樂的小遊戲空間。
-  </p>
-
-  <p>
-    希望每個來到這裡的人，都能找到屬於自己的小樂趣。
-  </p>
-
 </section>
 
 <footer>
-  <p>© 2026 PLAYGROUND | Made with ♡</p>
+  <p>© 2026 PLAYGROUND</p>
+  <p>MADE FOR A LITTLE MOMENT OF PLAY.</p>
 </footer>
 
 <script>
-
 // ========================
 // 1. 猜數字遊戲
 // ========================
@@ -752,8 +853,6 @@ function reactionClick() {
 // ========================
 
 startMemoryGame();
-
 </script>
-
 </body>
 </html>
